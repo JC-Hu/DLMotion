@@ -1,17 +1,27 @@
-# DLMotion
-DLMotion, CoreMotion For your iphone oriention and degrees
+//
+//  DLMotion.h
+//  AskView
+//
+//  Created by XueYulun on 15/4/16.
+//  Copyright (c) 2015年 DL. All rights reserved.
+//
 
----
+#import <Foundation/Foundation.h>
+#import <CoreMotion/CoreMotion.h>
+#import <UIKit/UIKit.h>
 
-####DLMotion
+#define MO_degreesToRadian(x) (M_PI * (x) / 180.0)
+#define MO_AffineTransformChanged @"AffineTransFormChangedNotificationKey"
 
-Add CoreMotion.Framework
+//! @abstract Did update Oriention
+typedef void (^UpdateOriention)(CGFloat DEGREE);
 
-`#import <CoreMotion/CoreMotion.h>`
-
-Properties: 
-
-```objective-c
+@interface DLMotion : NSObject {
+    
+    UIInterfaceOrientation orientation;
+    UIInterfaceOrientation currentOriention;
+    UIInterfaceOrientation tempOrientation;
+}
 
 //! @abstract Motion shareInstance
 + (instancetype)DefulatMotion;
@@ -40,44 +50,16 @@ Properties:
 //! @abstract Device motion Manager
 @property (nonatomic, strong) CMMotionManager * mMotionManager;
 
-```
-
-Methods: 
-
-
-```objective-c
-
 - (void)UpdateDeviceMotion: (UpdateOriention)updateBlock;
 
 /**
-*  Begin update Motion Data
-*/
+ *  Begin update Motion Data
+ */
 - (void)beginMotion;
 
 /**
-*  End
-*/
+ *  End
+ */
 - (void)EndMotion;
-```
 
-For use:
-
-```objective-c
-
-    [[DLMotion DefulatMotion] UpdateDeviceMotion:^(CGFloat DEGREE) {
-       
-        
-        [UIView animateWithDuration:.2 animations:^{
-            
-            _flashButton.transform = CGAffineTransformIdentity;
-            _flashButton.transform = CGAffineTransformRotate(_flashButton.transform, DEGREE);
-        }];
-    }];
-    
-```
-
-Or:
-
-```objective-c
-Add Notification and Call "[[DLMotion DefulatMotion] beginMotion];"
-```
+@end
